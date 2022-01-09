@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/ManethKulatunge/InventoryTracker/issues"
   },
-  "homepage": "https://github.com/ManethKulatunge/InventoryTracker#readme"
+  "homepage": "https://github.com/ManethKulatunge/InventoryTracker#readme",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
 }
