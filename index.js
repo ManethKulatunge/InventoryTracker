@@ -3,6 +3,7 @@ const inventory= require('./routes/inventory');
 const express = require('express');
 const app = express();
 
+//creating connection to database
 mongoose.connect('mongodb://localhost/inventory')
   .then(() => console.log('Connected to MongoDB...'))
   .catch(err => console.error('Could not connect to MongoDB...'));
