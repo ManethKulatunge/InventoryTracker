@@ -40,13 +40,20 @@ router.put('/:id', async (req, res) => {
     res.send(item);
   });
 
-  router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     const item = await Inventory.findByIdAndRemove(req.params.id);
   
     if (!item) return res.status(404).send('The item with the given ID was not found.');
   
     res.send(item);
-  });
+});
 
+router.get('/:id', async (req, res) => {
+    const item = await Inventory.findById(req.params.id);
+  
+    if (!item) return res.status(404).send('The customer with the given ID was not found.');
+  
+    res.send(item);
+  });
 
 module.exports = router;
