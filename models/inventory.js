@@ -7,7 +7,25 @@ const Inventory = mongoose.model('Inventory', new mongoose.Schema({
     required: true,
     minlength: 5,
     maxlength: 50
+  },
+  summary: {
+    type: String, 
+    required: false,
+    maxlength: 140
+  },
+  price: {
+    type: Number,
+    required: true
+  },
+  quantity: {
+    type: Number,
+    required: true
+  },
+  category: {
+    type:Array, 
+    require:true
   }
+
 }));
 
 function validateInventory(inventory) {
