@@ -2,10 +2,33 @@ const {Inventory, validate} = require('../models/inventory');
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
+const csvwriter = require('csv-writer')
+const createCsvWriter = csvwriter.createObjectCsvWriter
 
 router.get('/', async (req, res) => {
     const customers = await Inventory.find().sort('name');
     res.send(customers);
+});
+
+router.get('/csv', async (req, res) => {
+  const customers = await Inventory.find().sort('name');
+
+  const csvWriter = createCsvWriter({
+    path:'final.csv',
+    header: [
+      {id:'_id', title: 'ID'}, 
+      {id:'category', title:'Category'},
+      {id:'name', title:'Name'}, 
+      {id:'price', title:'Price'},
+      {id:'quantity', title:'Quantity'}
+    ]
+  })
+
+  csvWriter
+    .writeRecords(customers)
+    .then(() => console.log('Data uploaded to CSV'))
+
+  res.send(customers);
 });
 
 router.post('/', async (req, res) => {

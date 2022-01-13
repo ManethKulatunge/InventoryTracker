@@ -18,7 +18,10 @@
   },
   "homepage": "https://github.com/ManethKulatunge/InventoryTracker#readme",
   "dependencies": {
+    "csv-parser": "^3.0.0",
+    "csv-writer": "^1.6.0",
     "express": "^4.17.2",
+    "fs": "0.0.1-security",
     "joi": "^13.1.0",
     "js-beautify": "^1.14.0",
     "mongoose": "^5.0.1"
