@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/ManethKulatunge/InventoryTracker#readme",
   "dependencies": {
+    "axios": "^0.24.0",
+    "cors": "^2.8.5",
     "csv-parser": "^3.0.0",
     "csv-writer": "^1.6.0",
     "express": "^4.17.2",
