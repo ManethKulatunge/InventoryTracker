@@ -1,36 +1,10 @@
 const supertest = require('supertest')
 const app = require('./../../index.js')
 const request = supertest(app)
+const {Inventory, validate} = require('./../../models/inventory');
 
 const mongoose_test = require('mongoose')
 const databaseName = "testdb";
-
-const test_inventory = mongoose_test.model('test_inventory', new mongoose_test.Schema({
-    name: {
-      type: String,
-      required: true,
-      minlength: 5,
-      maxlength: 50
-    },
-    summary: {
-      type: String, 
-      required: false,
-      maxlength: 140
-    },
-    price: {
-      type: Number,
-      required: true
-    },
-    quantity: {
-      type: Number,
-      required: true
-    },
-    category: {
-      type:Array, 
-      require:true
-    }
-  
-}))
 
 beforeAll(done => {
     const url = `mongodb://localhost/${databaseName}`
@@ -57,12 +31,12 @@ it("Should save user to database", async () => {
     expect(res.status).toEqual(200);
   });
 
-it("Should save user to database", async () => {
-    const res = await request.get("/api/inventory").send()
-    const genres = [
-        { name: 'genre1' },
-        { name: 'genre2' },
-    ];
+it("should return all products", async () => {
     
+    const product = new Inventory({ name: 'CHEESE',price:45,quantity:33 });
+    await product.save()
+
+    const res = await request.get("/api/inventory").send()
+    expect(res.body.some(g => g.name === 'CHEESE')).toBeTruthy();
     expect(res.status).toEqual(200);
 });
