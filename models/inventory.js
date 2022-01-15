@@ -29,7 +29,7 @@ const Inventory = mongoose.model('Inventory', new mongoose.Schema({
 }));
 
 function validateInventory(inventory) {
-  const schema = {
+  const validation_schema = {
     name: Joi.string().min(5).required(),
     summary:Joi.string().max(140),
     price:Joi.number().integer().required(),
@@ -37,7 +37,7 @@ function validateInventory(inventory) {
     category:Joi.array()
   };
 
-  return Joi.validate(inventory, schema);
+  return Joi.validate(inventory, validation_schema);
 }
 
 exports.Inventory = Inventory; 
