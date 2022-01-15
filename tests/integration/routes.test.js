@@ -24,7 +24,7 @@ afterAll(done => {
 
 describe('POST /api/inventory', () => {
 
-    it("should save product to database", async () => {
+    it("should return 200, and the product details", async () => {
         const res = await request.post('/api/inventory').send({
             name : "fooditem1",
             price : 55,
@@ -32,9 +32,10 @@ describe('POST /api/inventory', () => {
         })
         
         expect(res.status).toEqual(200);
+        expect(res.body).toHaveProperty('_id', 'name', 'price', 'quantity')
     });
 
-    it("should save product to database (including summary and category) ", async () => {
+    it("should return 200, and the product details (with category and summary)", async () => {
         const res = await request.post('/api/inventory').send({
             name : "fooditem1",
             price : 55,
@@ -42,11 +43,12 @@ describe('POST /api/inventory', () => {
             category: ["perishable", "food"],
             summary: "food item is considered in the food category. maximum delivery time is 24 houurs"
         })
-        
+
         expect(res.status).toEqual(200);
+        expect(res.body).toHaveProperty('_id', 'name', 'price', 'quantity', 'category', 'summary')
     });
 
-    it("should NOT save product to database, and should return error: name should be atleast 5 characters", async () => {
+    it("should return 400, and error: name should be atleast 5 characters", async () => {
         
         const res = await request.post('/api/inventory').send({
             name : "food",
@@ -57,7 +59,7 @@ describe('POST /api/inventory', () => {
         expect(res.text).toEqual('"name" length must be at least 5 characters long')
     });
 
-    it("should NOT save product to database, and should return error: price is required", async () => {
+    it("should return 400, and error: price is required", async () => {
         
         const res = await request.post('/api/inventory').send({
             name : "fooditem1",
@@ -67,7 +69,7 @@ describe('POST /api/inventory', () => {
         expect(res.text).toEqual('"price" is required')
     });
 
-    it("should NOT save product to database, and should return error: quantity is required", async () => {
+    it("should return 400, and error: quantity is required", async () => {
         
         const res = await request.post('/api/inventory').send({
             name : "fooditem1",
@@ -77,7 +79,7 @@ describe('POST /api/inventory', () => {
         expect(res.text).toEqual('"quantity" is required')
     });
 
-    it("should NOT save product to database, and should return error: name is required", async () => {
+    it("should return 400, and error: name is required", async () => {
         
         const res = await request.post('/api/inventory').send({
             price : 55,
@@ -87,7 +89,7 @@ describe('POST /api/inventory', () => {
         expect(res.text).toEqual('"name" is required')
     });
 
-    it("should NOT save product to database, category should be an array ", async () => {
+    it("should return 400, and error: category should be an array ", async () => {
         const res = await request.post('/api/inventory').send({
             name : "fooditem1",
             price : 55,
@@ -100,7 +102,7 @@ describe('POST /api/inventory', () => {
         expect(res.text).toEqual('"category" must be an array')
     });
 
-    it("should NOT save product to database, name should be string ", async () => {
+    it("should return 400, and error: name should be string ", async () => {
         const res = await request.post('/api/inventory').send({
             name : 1234,
             price : 55,
@@ -113,7 +115,7 @@ describe('POST /api/inventory', () => {
         expect(res.text).toEqual('"name" must be a string')
     });
 
-    it("should NOT save product to database, price should be a number ", async () => {
+    it("should return 400, and error: price should be a number ", async () => {
         const res = await request.post('/api/inventory').send({
             name : "fooditem",
             price : "f55",
@@ -126,7 +128,7 @@ describe('POST /api/inventory', () => {
         expect(res.text).toEqual('"price" must be a number')
     });
 
-    it("should NOT save product to database, quantity should be a number ", async () => {
+    it("should return 400, and error: quantity should be a number ", async () => {
         const res = await request.post('/api/inventory').send({
             name : "fooditem",
             price : 55,
@@ -143,11 +145,21 @@ describe('POST /api/inventory', () => {
 describe('GET /api/inventory', () => {
     it("should return all products", async () => {
         
-        const product = new Inventory({ name: 'CHEESE',price:45,quantity:33 });
+        const product = new Inventory({ name: 'stationerybundle',price:45,quantity:33 });
         await product.save()
 
         const res = await request.get("/api/inventory").send()
-        expect(res.body.some(g => g.name === 'CHEESE')).toBeTruthy();
+        expect(res.body.some(g => g.name === 'stationerybundle')).toBeTruthy();
+        expect(res.status).toEqual(200);
+    });
+
+    it("should return all products", async () => {
+        
+        const product = new Inventory({ name: 'stationerybundle',price:45,quantity:33 });
+        await product.save()
+
+        const res = await request.get("/api/inventory").send()
+        expect(res.body.some(g => g.name === 'stationerybundle')).toBeTruthy();
         expect(res.status).toEqual(200);
     });
 });
