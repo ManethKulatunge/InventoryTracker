@@ -24,18 +24,26 @@ afterAll(done => {
 
 describe('POST /api/inventory', () => {
 
-    it("should return 200, and the product details", async () => {
+    it("should SAVE to database and RETURN 200 and the product details", async () => {
         const res = await request.post('/api/inventory').send({
-            name : "fooditem1",
+            name : "product1",
             price : 55,
             quantity : 33
         })
-        
+
+        // Ensures response returns status 200
         expect(res.status).toEqual(200);
+        // Ensures response contains id,name,price,and quantity
         expect(res.body).toHaveProperty('_id', 'name', 'price', 'quantity')
+
+        // Searches the product in the database
+        const product = await Inventory.findOne({ name: 'product1' })
+        expect(product.name).toBeTruthy()
+        expect(product.price).toBeTruthy()
+        expect(product.quantity).toBeTruthy()
     });
 
-    it("should return 200, and the product details (with category and summary)", async () => {
+    it("should SAVE to database and RETURN 200 and the product details (with category and summary)", async () => {
         const res = await request.post('/api/inventory').send({
             name : "fooditem1",
             price : 55,
@@ -44,8 +52,16 @@ describe('POST /api/inventory', () => {
             summary: "food item is considered in the food category. maximum delivery time is 24 houurs"
         })
 
+        // Ensures response returns status 200
         expect(res.status).toEqual(200);
+        // Ensures response contains id,name,price,and quantity
         expect(res.body).toHaveProperty('_id', 'name', 'price', 'quantity', 'category', 'summary')
+
+        // Searches the product in the database
+        const product = await Inventory.findOne({ name: 'product1' })
+        expect(product.name).toBeTruthy()
+        expect(product.price).toBeTruthy()
+        expect(product.quantity).toBeTruthy()
     });
 
     it("should return 400, and error: name should be atleast 5 characters", async () => {
@@ -154,9 +170,12 @@ describe('GET /api/inventory', () => {
     });
 
     it("should return all products", async () => {
-        
-        const product = new Inventory({ name: 'stationerybundle',price:45,quantity:33 });
-        await product.save()
+        const products = [
+            { name: 'stationerybundle',price:45,quantity:33 },
+            { name: 'productbundle',price:55,quantity:33 }
+        ]
+
+        await Inventory.collection.insertMany(products)
 
         const res = await request.get("/api/inventory").send()
         expect(res.body.some(g => g.name === 'stationerybundle')).toBeTruthy();
