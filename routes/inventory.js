@@ -46,37 +46,42 @@ router.post('/', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-    const { error } = validate(req.body); 
-    if (error) return res.status(400).send(error.details[0].message);
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(404).send('Enter a valid id');
+
+  const { error } = validate(req.body); 
+  if (error) return res.status(400).send(error.details[0].message);
   
-    const item = await Inventory.findByIdAndUpdate(req.params.id,
-      {
-        name: req.body.name,
-        price:req.body.price, 
-        quantity:req.body.quantity, 
-        summary:req.body.summary, 
-        category:req.body.category
-      }, { new: true });
+  const item = await Inventory.findByIdAndUpdate(req.params.id,
+    {
+      name: req.body.name,
+      price:req.body.price, 
+      quantity:req.body.quantity, 
+      summary:req.body.summary, 
+      category:req.body.category
+    }, { new: true });
   
-    if (!item) return res.status(404).send('The item with the given ID was not found.');
+  if (!item) return res.status(404).send('The item with the given ID was not found.');
     
-    res.send(item);
-  });
+  res.send(item);
+});
 
 router.delete('/:id', async (req, res) => {
-    const item = await Inventory.findByIdAndRemove(req.params.id);
-  
-    if (!item) return res.status(404).send('The item with the given ID was not found.');
-  
-    res.send(item);
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(404).send('Enter a valid id');
+
+  const item = await Inventory.findById(req.params.id)
+  if (!item) return res.status(404).send('The item with the given ID was not found.');
+  await Inventory.deleteOne({_id : req.params.id});
+
+  res.send(item);
 });
 
 router.get('/:id', async (req, res) => {
-    const item = await Inventory.findById(req.params.id);
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(404).send('Enter a valid id');
   
-    if (!item) return res.status(404).send('The customer with the given ID was not found.');
+  const item = await Inventory.findOne({_id:req.params.id});
+  if (!item) return res.status(404).send('The customer with the given ID was not found.');
   
-    res.send(item);
-  });
+  res.send(item);
+});
 
 module.exports = router;
