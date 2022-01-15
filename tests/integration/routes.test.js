@@ -218,7 +218,13 @@ describe('GET /:id', () => {
       expect(res.body).toHaveProperty('price', item.price);  
     });
 
-    it('should return 404 if no genre with the given id exists', async () => {
+    it('should return 404 if incorrect id is passed', async () => {
+        const res = await request.get('/api/inventory/1');
+        expect(res.status).toBe(404);
+        expect(res.text).toEqual('Enter a valid id')
+      });
+
+    it('should return 404 if no item with the given id exists', async () => {
       const id = mongoose_test.Types.ObjectId();
       const res = await request.get('/api/inventory/' + id);
       expect(res.status).toBe(404);
@@ -309,11 +315,66 @@ describe('GET /:id', () => {
         expect(res.text).toEqual('"category" must be an array')
     });
 
+    it('should return 404 if incorrect id is passed', async () => {
+        const res = await request.put('/api/inventory/1');
+        expect(res.status).toBe(404);
+        expect(res.text).toEqual('Enter a valid id')
+    });
+
     it('should return 404 if item with the given id was not found', async () => {
         id = mongoose_test.Types.ObjectId();
         const res = await exec();
   
         expect(res.status).toBe(404);
+        expect(res.text).toEqual('The item with the given ID was not found.')
     });
+  });
 
-});
+    describe('DELETE /:id', () => {
+        let id; 
+    
+        const exec = async () => {
+          return await request
+            .delete('/api/inventory/' + id)
+            .send();
+        }
+    
+        beforeEach(async () => {
+          // Before each test we need to create a genre and 
+          // put it in the database.      
+          item = new Inventory({ name: 'item1', price:30, quantity:60, category:["food", "perishable"]});
+          await item.save();
+          
+          id = item._id;  
+        })
+    
+        it('should return 404 if id is invalid', async () => {
+          id = 1;  
+          const res = await exec();
+    
+          expect(res.status).toBe(404);
+          expect(res.text).toEqual('Enter a valid id')
+        });
+    
+        it('should return 404 if no item with the given id was found', async () => {
+          id = mongoose_test.Types.ObjectId();
+          const res = await exec();
+
+          expect(res.status).toBe(404);
+          expect(res.text).toEqual('The item with the given ID was not found.')
+        });
+    
+        it('should delete the genre if input is valid', async () => {
+          await exec();
+    
+          const itemInDb = await Inventory.findById(id);
+          expect(itemInDb).toBeNull();
+        });
+    
+        it('should return the removed genre', async () => {
+          const res = await exec();
+    
+          expect(res.body).toHaveProperty('_id', item._id.toHexString());
+          expect(res.body).toHaveProperty('name', item.name);
+        });
+    });
