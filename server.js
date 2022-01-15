@@ -1,5 +1,6 @@
 //creating connection to database
 const app = require("./index.js");
+const mongoose = require('mongoose')
 
 mongoose.connect('mongodb://localhost/inventory')
   .then(() => console.log('Connected to MongoDB...'))
