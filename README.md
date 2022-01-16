@@ -162,8 +162,8 @@ response body:
 
 The front end essentially helps address the second requirement of the challenge. It has a button which when clicked will trigger the GET /api/inventory/csv request and save a CSV file with product data
 
-![Initial Image showing page](./demo/images/demo1.jpg)
-![After clicking button](./demo/images/demo2.jpg)
-![File Directory](./demo/images/demo3.jpg)
-![CSV File](./demo/images/demo4.jpg)
+![Initial Image showing page]('demo/images/demo1.png')
+![After clicking button](./demo/images/demo2.png)
+![File Directory](./demo/images/demo3.png)
+![CSV File](./demo/images/demo4.png)
 
