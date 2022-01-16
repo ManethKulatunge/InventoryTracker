@@ -173,3 +173,14 @@ response body:
 I have written 28 integration tests for this application and they cover all the aforementioned requests. The test results will appear in this manner after following mentioned instructions
 
 ![test image](./demo/images/test1.png)
+
+## Technologies used**
+- MongoDB
+- Node.JS
+- Javascript
+- React
+- Express.js
+- Jest (Testing)
+
+**Known Improvements**
+There is a relatively minor issue when executing the test library where running `npx jest --detectOpenHandles` will reveal `mongoose.connect` is causing issues with the exiting of Jest. I have tried my best to solve this issue but all the recommended practices haven't brought any changes. However this doesnt affect with testing the application because the test suite is successfully run anytime it is launched! 
