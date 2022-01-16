@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const csvwriter = require('csv-writer')
 const createCsvWriter = csvwriter.createObjectCsvWriter
+mongoose.set('useFindAndModify', false);
 
 router.get('/', async (req, res) => {
     const customers = await Inventory.find().sort('name');
