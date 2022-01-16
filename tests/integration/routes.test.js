@@ -2,15 +2,16 @@ const supertest = require('supertest')
 const app = require('./../../index.js')
 const request = supertest(app)
 const {Inventory, validate} = require('./../../models/inventory');
-
 const mongoose_test = require('mongoose')
 const databaseName = "testdb";
+
 
 beforeAll(done => {
     jest.useFakeTimers('legacy')
     const url = `mongodb://localhost/${databaseName}`
+    mongoose_test.set('useFindAndModify', false);
       
-    mongoose_test.connect(url)
+    mongoose_test.connect(url, {useNewUrlParser: true, useUnifiedTopology: true})
         .then(() => console.log('Connected to MongoDB...'))
         .catch(err => console.error('Could not connect to MongoDB...'));
     done()
