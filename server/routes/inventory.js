@@ -6,16 +6,19 @@ const csvwriter = require('csv-writer')
 const createCsvWriter = csvwriter.createObjectCsvWriter
 mongoose.set('useFindAndModify', false);
 
+//GET /api/inventory/ : returns all the items in the database
 router.get('/', async (req, res) => {
     const customers = await Inventory.find().sort('name');
     res.send(customers);
 });
 
+//GET /api/inventory/csv : creates a CSV file with item data
+// and returns all the items in the database
 router.get('/csv', async (req, res) => {
   const customers = await Inventory.find().sort('name');
 
   const csvWriter = createCsvWriter({
-    path:'final.csv',
+    path:'../final.csv',
     header: [
       {id:'_id', title: 'ID'}, 
       {id:'category', title:'Category'},
@@ -32,6 +35,8 @@ router.get('/csv', async (req, res) => {
   res.send(customers);
 });
 
+//POST /api/inventory/ : create inventory items
+// and adding item to database
 router.post('/', async (req, res) => {
     const { error } = validate(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
@@ -46,6 +51,7 @@ router.post('/', async (req, res) => {
       res.send(item);
 });
 
+//PUT /api/inventory/:id edit existing inventory items
 router.put('/:id', async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(404).send('Enter a valid id');
 
@@ -66,6 +72,7 @@ router.put('/:id', async (req, res) => {
   res.send(item);
 });
 
+//DELETE /api/inventory/:id delete existing inventory items
 router.delete('/:id', async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(404).send('Enter a valid id');
 
@@ -76,6 +83,7 @@ router.delete('/:id', async (req, res) => {
   res.send(item);
 });
 
+//GET /api/inventory/:id retrieve existing inventory item using id
 router.get('/:id', async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(404).send('Enter a valid id');
   

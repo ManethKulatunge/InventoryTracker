@@ -1,6 +1,7 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
 
+//this will help creating documents for the MongoDB database
 const Inventory = mongoose.model('Inventory', new mongoose.Schema({
   name: {
     type: String,
@@ -28,6 +29,7 @@ const Inventory = mongoose.model('Inventory', new mongoose.Schema({
 
 }));
 
+//this function will assist with validating the CRUD requests
 function validateInventory(inventory) {
   const validation_schema = {
     name: Joi.string().min(5).required(),
