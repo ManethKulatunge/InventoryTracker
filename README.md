@@ -167,3 +167,9 @@ response body:
 },
 {...{....}....} : contains rest of items
 ```
+
+### Testing ###
+
+I have written 28 integration tests for this application and they cover all the aforementioned requests. The test results will appear in this manner after following mentioned instructions
+
+![test image](./demo/images/test1.png)
