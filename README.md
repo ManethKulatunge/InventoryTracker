@@ -40,6 +40,15 @@
 - **PUT /api/inventory/:id** *edits existing item*
 - **DELETE /api/inventory/:id** *deletes an item from the database*
 
+## Front End Demo
+
+The front end essentially helps address the second requirement of the challenge. It has a button which when clicked will trigger the GET /api/inventory/csv request and save a CSV file with product data
+
+![Initial Image showing page](./demo/images/demo1.png)
+![After clicking button](./demo/images/demo2.png)
+![File Directory](./demo/images/demo3.png)
+![CSV File](./demo/images/demo4.png)
+
 ## Example HTTP Requests and Responses
 ```
 request: POST localhost:5000/api/inventory/
@@ -158,12 +167,3 @@ response body:
 },
 {...{....}....} : contains rest of items
 ```
-## Front End Demo
-
-The front end essentially helps address the second requirement of the challenge. It has a button which when clicked will trigger the GET /api/inventory/csv request and save a CSV file with product data
-
-![Initial Image showing page](./demo/images/demo1.png)
-![After clicking button](./demo/images/demo2.png)
-![File Directory](./demo/images/demo3.png)
-![CSV File](./demo/images/demo4.png)
-
