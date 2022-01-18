@@ -27,7 +27,8 @@
     "fs": "0.0.1-security",
     "joi": "^13.1.0",
     "js-beautify": "^1.14.0",
-    "mongoose": "^5.13.14"
+    "mongoose": "^5.13.14",
+    "nodemon": "^2.0.15"
   },
   "devDependencies": {
     "jest": "^27.4.7",
