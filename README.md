@@ -10,7 +10,7 @@
 - Push a button export product data to a CSV
 
 ## How To Run The Project
-- **Pre-req:** Make sure latest stable version of [node.js](https://nodejs.org/en/download/) is installed on your computer
+- **Pre-req:** Make sure latest stable version of [node.js](https://nodejs.org/en/download/) and a recent version of [mongodb](https://docs.mongodb.com/manual/installation/) is installed on your computer
 - Clone repository and go into the application's directory
 - **Backend:**
     - Navigate to the `server` folder
