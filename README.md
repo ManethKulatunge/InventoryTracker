@@ -1,6 +1,6 @@
 # InventoryTracker
 
-This repository contains code for a inventory tracking web application for a logistics company that I completed as part of Shopify Backend Developer Intern Challenge - Summer 2022
+This repository contains code for an Inventory Tracking Web Application that I completed as part of Shopify Backend Developer Intern Challenge - Summer 2022
 
 ## Requirements addressed
 - Basic CRUD Functionality
