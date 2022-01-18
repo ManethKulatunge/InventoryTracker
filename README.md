@@ -29,10 +29,9 @@ This repository contains code for an Inventory Tracking Web Application that I c
 - **Testing:**
     - Navigate to the `server` folder
     - `npm install --save` (in the case this is not done before or if there are any issues with doing the next few steps)
-    - `npx jest`
--**Important:** 
+    - `npx jest` (or `npm test`)
+- **Important:** 
     - Make sure you run `npm install --save` when navigating to both folders for the first time. 
-    - Make sure you have the latest stable version of node.js for both folders 
 
 ## End Points 
 - **GET /api/inventory/** *returns a list of items*
